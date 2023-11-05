@@ -4,13 +4,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        args = new string[] { "TDnet_Results", "2023-11-02" };
-
-        // foreach (var arg in args)
-        // {
-        //     Console.WriteLine(arg);
-        // }
-
         // ルーティング
         string mode = args[0].ToLower();
         DateTime date;

@@ -44,8 +44,6 @@ public class FileService
                     .Where(code => code != "")
                     .ToList();
 
-                codes = new List<string>() { "4176", "7184" };
-
                 return codes;
             }
         }
