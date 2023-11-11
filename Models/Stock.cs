@@ -14,189 +14,98 @@ public class Stock
     public string Name { get; set; }
     public Constants.Market Market { get; set; }
     public int Quarter { get; set; }
+    public StockPerformance YearPerformance { get; set; } = new StockPerformance();
+    public StockPerformance YearPerformance1TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance1TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance2TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance3TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance4TimesBefore { get; set; } = new StockPerformance();
 
+    public decimal? YoyTotalNetSales
+    {
+        get => Rate(YearPerformance.NetSales, YearPerformance1TimesBefore.NetSales);
+    }
+
+    public decimal? YoyTotalOperatingProfit
+    {
+        get => Rate(YearPerformance.OperatingProfit, YearPerformance1TimesBefore.OperatingProfit);
+    }
+
+    public decimal? YoyTotalOrdinaryProfit
+    {
+        get => Rate(YearPerformance.OrdinaryProfit, YearPerformance1TimesBefore.OrdinaryProfit);
+    }
+
+    public decimal? YoyTotalProfit
+    {
+        get => Rate(YearPerformance.Profit, YearPerformance1TimesBefore.Profit);
+    }
+
+    public decimal? YoyTotalEarningsPerShare
+    {
+        get => Rate(YearPerformance.EarningsPerShare, YearPerformance1TimesBefore.EarningsPerShare);
+    }
+
     public decimal? QoqNetSales
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.NetSales;
-            decimal? pre = QuarterPerformance1TimesBefore.NetSales;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.NetSales, QuarterPerformance1TimesBefore.NetSales);
     }
 
     public decimal? QoqOperatingProfit
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.OperatingProfit;
-            decimal? pre = QuarterPerformance1TimesBefore.OperatingProfit;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.OperatingProfit, QuarterPerformance1TimesBefore.OperatingProfit);
     }
 
     public decimal? QoqOrdinaryProfit
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.OrdinaryProfit;
-            decimal? pre = QuarterPerformance1TimesBefore.OrdinaryProfit;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.OrdinaryProfit, QuarterPerformance1TimesBefore.OrdinaryProfit);
     }
 
     public decimal? QoqProfit
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.Profit;
-            decimal? pre = QuarterPerformance1TimesBefore.Profit;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.Profit, QuarterPerformance1TimesBefore.Profit);
     }
 
     public decimal? QoqEarningsPerShare
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.EarningsPerShare;
-            decimal? pre = QuarterPerformance1TimesBefore.EarningsPerShare;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.EarningsPerShare, QuarterPerformance1TimesBefore.EarningsPerShare);
     }
 
     public decimal? YoyNetSales
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.NetSales;
-            decimal? pre = QuarterPerformance4TimesBefore.NetSales;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.NetSales, QuarterPerformance4TimesBefore.NetSales);
     }
 
     public decimal? YoyOperatingProfit
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.OperatingProfit;
-            decimal? pre = QuarterPerformance4TimesBefore.OperatingProfit;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.OperatingProfit, QuarterPerformance4TimesBefore.OperatingProfit);
     }
 
     public decimal? YoyOrdinaryProfit
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.OrdinaryProfit;
-            decimal? pre = QuarterPerformance4TimesBefore.OrdinaryProfit;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.OrdinaryProfit, QuarterPerformance4TimesBefore.OrdinaryProfit);
     }
 
     public decimal? YoyProfit
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.Profit;
-            decimal? pre = QuarterPerformance4TimesBefore.Profit;
-
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        get => Rate(QuarterPerformance.Profit, QuarterPerformance4TimesBefore.Profit);
     }
 
     public decimal? YoyEarningsPerShare
     {
-        get
-        {
-            decimal? cur = QuarterPerformance.EarningsPerShare;
-            decimal? pre = QuarterPerformance4TimesBefore.EarningsPerShare;
+        get => Rate(QuarterPerformance.EarningsPerShare, QuarterPerformance4TimesBefore.EarningsPerShare);
+    }
 
-            if (cur != null && cur > 0 && pre != null && pre > 0)
-            {
-                return (cur - pre) / pre;
-            }
-            else
-            {
-                return null;
-            }
+    private static decimal? Rate(decimal? cur, decimal? pre)
+    {
+        if (cur != null && cur > 0 && pre != null && pre > 0)
+        {
+            return (cur - pre) / pre;
+        }
+        else
+        {
+            return null;
         }
     }
 }

@@ -9,7 +9,7 @@ public class HtmlParseService
     public static async Task<Stock?> ParseHtml(string html)
     {
         var parser = new HtmlParser();
-        var doc = await parser.ParseDocumentAsync(html);
+        IHtmlDocument doc = await parser.ParseDocumentAsync(html);
 
         string? code = doc
             .QuerySelectorAll("#stockinfo_i1 > div.si_i1_1 > h2 > span")
@@ -53,7 +53,7 @@ public class HtmlParseService
         {
             return null;
         }
-        if (quarter.EndsWith("1Q.jpg"))
+        else if (quarter.EndsWith("1Q.jpg"))
         {
             quarter = "1";
         }
@@ -74,6 +74,15 @@ public class HtmlParseService
             return null;
         }
 
+        IElement? yearPerformance = doc
+            .QuerySelectorAll("#finance_box > div.fin_year_t0_d.fin_year_result_d > table > tbody > tr > th")
+            .Where(th => th.Text() == "前期比")
+            .FirstOrDefault()
+            ?.ParentElement
+            ?.PreviousElementSibling;
+
+        IElement? yearPerformance1TimesBefore = yearPerformance?.PreviousElementSibling;
+
         IElement? quarterPerformance = doc
             .QuerySelectorAll("#finance_box > div.fin_quarter_t0_d.fin_quarter_result_d > table > tbody > tr > th")
             .Where(th => th.Text() == "前年同期比")
@@ -93,11 +102,13 @@ public class HtmlParseService
             int.Parse(quarter)
         )
         {
-            QuarterPerformance = ParsePerformanceHtml(quarterPerformance),
-            QuarterPerformance1TimesBefore = ParsePerformanceHtml(quarterPerformance1TimesBefore),
-            QuarterPerformance2TimesBefore = ParsePerformanceHtml(quarterPerformance2TimesBefore),
-            QuarterPerformance3TimesBefore = ParsePerformanceHtml(quarterPerformance3TimesBefore),
-            QuarterPerformance4TimesBefore = ParsePerformanceHtml(quarterPerformance4TimesBefore),
+            YearPerformance = yearPerformance == null ? new StockPerformance() : ParsePerformanceHtml(yearPerformance),
+            YearPerformance1TimesBefore = yearPerformance1TimesBefore == null ? new StockPerformance() : ParsePerformanceHtml(yearPerformance1TimesBefore),
+            QuarterPerformance = quarterPerformance == null ? new StockPerformance() : ParsePerformanceHtml(quarterPerformance),
+            QuarterPerformance1TimesBefore = quarterPerformance1TimesBefore == null ? new StockPerformance() : ParsePerformanceHtml(quarterPerformance1TimesBefore),
+            QuarterPerformance2TimesBefore = quarterPerformance2TimesBefore == null ? new StockPerformance() : ParsePerformanceHtml(quarterPerformance2TimesBefore),
+            QuarterPerformance3TimesBefore = quarterPerformance3TimesBefore == null ? new StockPerformance() : ParsePerformanceHtml(quarterPerformance3TimesBefore),
+            QuarterPerformance4TimesBefore = quarterPerformance4TimesBefore == null ? new StockPerformance() : ParsePerformanceHtml(quarterPerformance4TimesBefore),
         };
 
         return stock;
@@ -117,55 +128,55 @@ public class HtmlParseService
         return stocks.ToList();
     }
 
-    public static StockPerformance ParsePerformanceHtml(IElement? row)
+    public static StockPerformance ParsePerformanceHtml(IElement row)
     {
-        string? NetSales = row
-            ?.QuerySelectorAll("td:nth-child(2)")
-            ?.FirstOrDefault()
-            ?.Text()
-            ?.Replace(",", "")
-            ?.Replace("－", "")
-            ?.Trim();
+        string NetSales = row
+            .QuerySelectorAll("td:nth-child(2)")
+            .First()
+            .Text()
+            .Replace(",", "")
+            .Replace("－", "")
+            .Trim();
 
-        string? OperatingProfit = row
-            ?.QuerySelectorAll("td:nth-child(3)")
-            ?.FirstOrDefault()
-            ?.Text()
-            ?.Replace(",", "")
-            ?.Replace("－", "")
-            ?.Trim();
+        string OperatingProfit = row
+            .QuerySelectorAll("td:nth-child(3)")
+            .First()
+            .Text()
+            .Replace(",", "")
+            .Replace("－", "")
+            .Trim();
 
-        string? OrdinaryProfit = row
-            ?.QuerySelectorAll("td:nth-child(4)")
-            ?.FirstOrDefault()
-            ?.Text()
-            ?.Replace(",", "")
-            ?.Replace("－", "")
-            ?.Trim();
+        string OrdinaryProfit = row
+            .QuerySelectorAll("td:nth-child(4)")
+            .First()
+            .Text()
+            .Replace(",", "")
+            .Replace("－", "")
+            .Trim();
 
-        string? Profit = row
-            ?.QuerySelectorAll("td:nth-child(5)")
-            ?.FirstOrDefault()
-            ?.Text()
-            ?.Replace(",", "")
-            ?.Replace("－", "")
-            ?.Trim();
+        string Profit = row
+            .QuerySelectorAll("td:nth-child(5)")
+            .First()
+            .Text()
+            .Replace(",", "")
+            .Replace("－", "")
+            .Trim();
 
-        string? EarningsPerShare = row
-            ?.QuerySelectorAll("td:nth-child(6)")
-            ?.FirstOrDefault()
-            ?.Text()
-            ?.Replace(",", "")
-            ?.Replace("－", "")
-            ?.Trim();
+        string EarningsPerShare = row
+            .QuerySelectorAll("td:nth-child(6)")
+            .First()
+            .Text()
+            .Replace(",", "")
+            .Replace("－", "")
+            .Trim();
 
         StockPerformance performance = new StockPerformance()
         {
-            NetSales = string.IsNullOrEmpty(NetSales) ? null : decimal.Parse(NetSales),
-            OperatingProfit = string.IsNullOrEmpty(OperatingProfit) ? null : decimal.Parse(OperatingProfit),
-            OrdinaryProfit = string.IsNullOrEmpty(OrdinaryProfit) ? null : decimal.Parse(OrdinaryProfit),
-            Profit = string.IsNullOrEmpty(Profit) ? null : decimal.Parse(Profit),
-            EarningsPerShare = string.IsNullOrEmpty(EarningsPerShare) ? null : decimal.Parse(EarningsPerShare)
+            NetSales = NetSales == "" ? null : decimal.Parse(NetSales),
+            OperatingProfit = OperatingProfit == "" ? null : decimal.Parse(OperatingProfit),
+            OrdinaryProfit = OrdinaryProfit == "" ? null : decimal.Parse(OrdinaryProfit),
+            Profit = Profit == "" ? null : decimal.Parse(Profit),
+            EarningsPerShare = EarningsPerShare == "" ? null : decimal.Parse(EarningsPerShare)
         };
 
         return performance;
