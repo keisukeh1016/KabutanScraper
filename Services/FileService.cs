@@ -8,11 +8,7 @@ public class FileService
 {
     public static void OutputTdnetResultsCodes(IList<Stock?> stocks, DateTime date)
     {
-        string path = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-            "stock\\Out\\Kabutan_TDnet_Results",
-            date.ToString("yyyy-MM-dd") + ".json"
-        );
+        string path = Path.Combine(Constants.IO.TdnetResultsCodesOutputPath, date.ToString("yyyy-MM-dd") + ".csv");
 
         var options = new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(stocks, options);
@@ -23,11 +19,8 @@ public class FileService
 
     public static List<string> ReadTdnetResultsCodes(DateTime date)
     {
-        string path = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-            "stock\\Out\\TDnet_Results",
-            date.ToString("yyyy-MM-dd") + ".csv"
-        );
+        string path = Path.Combine(Constants.IO.TdnetResultsCodesInputPath, date.ToString("yyyy-MM-dd") + ".csv");
+
         if (!File.Exists(path))
         {
             Console.WriteLine("ファイルが存在しません。");
