@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "KabutanScreener": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\keisu\\OneDrive\\デスクトップ\\stock\\Out\\test.json\"\r\n\"C:\\Users\\keisu\\OneDrive\\デスクトップ\\stock\\Out\\test2.json\""
+    }
+  }
+}
