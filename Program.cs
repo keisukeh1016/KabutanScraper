@@ -11,7 +11,7 @@ class Program
         string outputPath = Path.GetFullPath(args[1]);
 
         // 実行
-        Task task = MainController.TdnetResults(inputPath, outputPath);
+        Task task = MainController.Scrape(inputPath, outputPath);
         task.Wait();
     }
 }

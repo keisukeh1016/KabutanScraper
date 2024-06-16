@@ -1,6 +1,6 @@
 ﻿namespace KabutanScraper;
 
-public class HttpService
+public static class HttpService
 {
     private static readonly HttpClient client = new HttpClient();
 

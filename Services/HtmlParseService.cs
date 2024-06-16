@@ -4,7 +4,7 @@ using AngleSharp.Html.Parser;
 
 namespace KabutanScraper;
 
-public class HtmlParseService
+public static class HtmlParseService
 {
     public static async Task<Stock?> ParseHtml(string html)
     {

@@ -4,18 +4,9 @@ using System.Text.Unicode;
 
 namespace KabutanScraper;
 
-public class FileService
+public static class FileService
 {
-    public static void OutputTdnetResultsCodes(IList<Stock?> stocks, string path)
-    {
-        var options = new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), WriteIndented = true };
-        string jsonString = JsonSerializer.Serialize(stocks, options);
-        File.WriteAllText(path, jsonString);
-
-        return;
-    }
-
-    public static List<string> ReadTdnetResultsCodes(string path)
+    public static List<string> ReadCodes(string path)
     {
         if (!File.Exists(path))
         {
@@ -41,5 +32,14 @@ public class FileService
             Console.WriteLine(e.Message);
             return new List<string> { };
         }
+    }
+
+    public static void WriteResults(IList<Stock?> stocks, string path)
+    {
+        var options = new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(stocks, options);
+        File.WriteAllText(path, jsonString);
+
+        return;
     }
 }
