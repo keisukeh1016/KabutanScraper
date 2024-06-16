@@ -14,16 +14,22 @@ public class Stock
     public string Name { get; set; }
     public Constants.Market Market { get; set; }
     public int Quarter { get; set; }
+
+    // 四半期業績
     public StockPerformance QuarterPerformance { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance1TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance2TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance3TimesBefore { get; set; } = new StockPerformance();
     public StockPerformance QuarterPerformance4TimesBefore { get; set; } = new StockPerformance();
-    public StockPerformance YtdPerformance { get; set; } = new StockPerformance();
-    public StockPerformance YtdPerformance1TimesBefore { get; set; } = new StockPerformance();
+
+    // 通期業績
     public StockPerformance YearPerformance { get; set; } = new StockPerformance();
     public StockPerformance YearPerformance1TimesBefore { get; set; } = new StockPerformance();
+    public StockPerformance YearPerformance2TimesBefore { get; set; } = new StockPerformance();
+    public StockPerformance YearPerformance3TimesBefore { get; set; } = new StockPerformance();
+    public StockPerformance YearPerformance4TimesBefore { get; set; } = new StockPerformance();
 
+    // 前期比（四半期）
     public decimal? QoqNetSales
     {
         get => Rate(QuarterPerformance.NetSales, QuarterPerformance1TimesBefore.NetSales);
@@ -49,6 +55,7 @@ public class Stock
         get => Rate(QuarterPerformance.EarningsPerShare, QuarterPerformance1TimesBefore.EarningsPerShare);
     }
 
+    // 前年同期比（四半期）
     public decimal? YoyNetSales
     {
         get => Rate(QuarterPerformance.NetSales, QuarterPerformance4TimesBefore.NetSales);
@@ -74,31 +81,7 @@ public class Stock
         get => Rate(QuarterPerformance.EarningsPerShare, QuarterPerformance4TimesBefore.EarningsPerShare);
     }
 
-    public decimal? YtdYoyNetSales
-    {
-        get => Rate(YtdPerformance.NetSales, YtdPerformance1TimesBefore.NetSales);
-    }
-
-    public decimal? YtdYoyOperatingProfit
-    {
-        get => Rate(YtdPerformance.OperatingProfit, YtdPerformance1TimesBefore.OperatingProfit);
-    }
-
-    public decimal? YtdYoyOrdinaryProfit
-    {
-        get => Rate(YtdPerformance.OrdinaryProfit, YtdPerformance1TimesBefore.OrdinaryProfit);
-    }
-
-    public decimal? YtdYoyProfit
-    {
-        get => Rate(YtdPerformance.Profit, YtdPerformance1TimesBefore.Profit);
-    }
-
-    public decimal? YtdYoyEarningsPerShare
-    {
-        get => Rate(YtdPerformance.EarningsPerShare, YtdPerformance1TimesBefore.EarningsPerShare);
-    }
-
+    // 前期比（通期）
     public decimal? FiscalYoyNetSales
     {
         get => Rate(YearPerformance.NetSales, YearPerformance1TimesBefore.NetSales);

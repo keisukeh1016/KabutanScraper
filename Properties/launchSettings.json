@@ -2,7 +2,7 @@
   "profiles": {
     "KabutanScraper": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\keisu\\OneDrive\\デスクトップ\\stock\\In\\test.csv\"\r\n\"C:\\Users\\keisu\\OneDrive\\デスクトップ\\stock\\Out\\test.csv\""
+      "commandLineArgs": "\"C:\\Users\\keisu\\OneDrive\\デスクトップ\\stock\\In\\test.csv\"\r\n\"C:\\Users\\keisu\\OneDrive\\デスクトップ\\stock\\Out\\test.json\""
     }
   }
 }
