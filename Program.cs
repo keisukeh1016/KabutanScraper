@@ -4,25 +4,14 @@ class Program
 {
     static void Main(string[] args)
     {
-        // ルーティング
-        string mode = args[0].ToLower();
-        DateTime date;
-        bool isDate = DateTime.TryParse(args[1], out date);
-        if (!isDate)
-        {
-            Console.WriteLine("日付の変換に失敗しました。");
-            return;
-        }
+        // 引数0
+        string inputPath = Path.GetFullPath(args[0]);
 
-        switch (mode)
-        {
-            case "tdnet_results":
-                Task task = MainController.TdnetResults(date);
-                task.Wait();
-                break;
+        // 引数1
+        string outputPath = Path.GetFullPath(args[1]);
 
-            default:
-                break;
-        }
+        // 実行
+        Task task = MainController.TdnetResults(inputPath, outputPath);
+        task.Wait();
     }
 }

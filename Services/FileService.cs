@@ -6,10 +6,8 @@ namespace KabutanScraper;
 
 public class FileService
 {
-    public static void OutputTdnetResultsCodes(IList<Stock?> stocks, DateTime date)
+    public static void OutputTdnetResultsCodes(IList<Stock?> stocks, string path)
     {
-        string path = Path.Combine(Constants.IO.TdnetResultsCodesOutputPath, date.ToString("yyyy-MM-dd") + ".csv");
-
         var options = new JsonSerializerOptions { Encoder = JavaScriptEncoder.Create(UnicodeRanges.All), WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(stocks, options);
         File.WriteAllText(path, jsonString);
@@ -17,10 +15,8 @@ public class FileService
         return;
     }
 
-    public static List<string> ReadTdnetResultsCodes(DateTime date)
+    public static List<string> ReadTdnetResultsCodes(string path)
     {
-        string path = Path.Combine(Constants.IO.TdnetResultsCodesInputPath, date.ToString("yyyy-MM-dd") + ".csv");
-
         if (!File.Exists(path))
         {
             Console.WriteLine("ファイルが存在しません。");
