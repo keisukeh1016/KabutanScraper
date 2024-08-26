@@ -44,7 +44,7 @@ namespace KabutanScreener
                 };
 
                 decimal? max = operatingProfits.Where(x => x != null).Max();
-                bool isMax = max == stock.YearPerformance.OperatingProfitRate;
+                bool isMax = max * 0.95m <= stock.YearPerformance.OperatingProfitRate;
 
                 return isMax;
             };
@@ -65,7 +65,7 @@ namespace KabutanScreener
                 };
 
                 decimal? max = ordinaryProfits.Where(x => x != null).Max();
-                bool isMax = max == stock.YearPerformance.OrdinaryProfitRate;
+                bool isMax = max * 0.95m == stock.YearPerformance.OrdinaryProfitRate;
 
                 return isMax;
             };
@@ -86,7 +86,7 @@ namespace KabutanScreener
                 };
 
                 decimal? max = profits.Where(x => x != null).Max();
-                bool isMax = max == stock.YearPerformance.ProfitRate;
+                bool isMax = max * 0.95m == stock.YearPerformance.ProfitRate;
 
                 return isMax;
             };

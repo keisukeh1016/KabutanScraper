@@ -27,7 +27,7 @@ public static class HttpService
             Task<string> task = GetHtml(code);
             tasks.Add(task);
 
-            await Task.Delay(300);
+            await Task.Delay(500);
         }
 
         string[] htmlList = await Task.WhenAll(tasks);
